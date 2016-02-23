@@ -48,10 +48,12 @@
 	<div class="row">
 		<input type="hidden" name="count" value="1" />
         <div class="control-group" id="fields">
-            <label class="control-label" for="field1">Nice Multiple Form Fields</label>
+            <label class="control-label" for="field1">Enter a poll question:</label>
             <div class="controls" id="profs"> 
-                <form class="input-append">
-                    <div id="field"><input autocomplete="off" class="input" id="field1" name="prof1" type="text" placeholder="Type something" data-items="8"/><button id="b1" class="btn add-more" type="button">+</button></div>
+                <form class="input-append" id="file-form" enctype="multipart/form-data" method="post"  action="/create">
+                    <input type="text" name="question" placeholder="Type a question"><br/>Options:<br/>
+                    <div id="field"><input autocomplete="off" class="input" id="field1" name="field1" type="text" placeholder="Type an option" data-items="8"/><button id="b1" class="btn add-more" type="button">+</button></div>
+                    <input type="submit" value="Submit" id="submit" />
                 </form>
             <br>
             <small>Press + to add another form field :)</small>
