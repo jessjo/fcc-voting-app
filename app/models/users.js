@@ -15,4 +15,9 @@ var User = new Schema({
    }
 });
 
+var Poll = new Schema({
+    question: String,
+    choices: [{ category: String, votes: Number }],
+});
+
 module.exports = mongoose.model('User', User);
