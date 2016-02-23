@@ -2,6 +2,7 @@
 
 var express = require('express');
 var routes = require('./app/routes/index.js');
+var create = require('./app/routes/create.js');
 var mongoose = require('mongoose');
 var passport = require('passport');
 var session = require('express-session');
@@ -26,6 +27,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 routes(app, passport);
+   create(app);
 
 var port = process.env.PORT || 8080;
 app.listen(port,  function () {
