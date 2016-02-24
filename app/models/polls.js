@@ -7,7 +7,7 @@ var Schema = mongoose.Schema;
 var Poll = new Schema({
     question: String,
     choices: [{ category: String, votes: Number }],
-    id: String
+    id: Number
 });
 
 module.exports = mongoose.model('Poll', Poll);

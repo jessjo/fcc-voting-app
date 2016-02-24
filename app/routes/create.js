@@ -3,7 +3,7 @@
 var multer  = require('multer')
 var upload = multer({ dest: 'uploads/' })
 var express = require('express');
-//var models = require('./app/models/polls.js');
+var Polls = require('../models/polls.js');
 
 
 //For creating polls
@@ -26,8 +26,25 @@ app.route('/create')
 app.post('/create',  upload.array(), function (req, res, next) {
 
     console.log(req.body)
+    //while fields exist
+    
+    //id should count how many entries exist and augment by one
+    Polls.count({}, function(err, count){
+      if (err){ throw err;}
+        console.log( "Number of docs: ", count );
+        
+           var newDoc = new Polls({ 'question': req.body['question'],
+           choices: [{ "category": "Pizza", "votes": 0 }],
+           id: count+1 });
+           newDoc.save(function (err, doc) {
+         if (err) { throw err; }
+          res.json(doc);
+    });
+    });
+ 
+   
       
-	  res.status(204).end();
+	  //res.status(204).end();
 });
 
 //user visits poll creation page
