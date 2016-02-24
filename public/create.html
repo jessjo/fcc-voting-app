@@ -7,10 +7,8 @@
 		<title>The Amazing Poll Creator</title>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 		<script>
-    var next = 1;
-		
 	$(document).ready(function(){
-
+    var next = 1;
     $(".add-more").click(function(e){
         e.preventDefault();
         var addto = "#field" + next;
@@ -33,20 +31,12 @@
                 $(fieldID).remove();
             });
     });
-    
+
 
     
 
     
 });
-
- $("#file-form").submit( function(eventObj) {
-      $('<input />').attr('type', 'hidden')
-          .attr('formfields', next)
-          .appendTo('#file-form');
-      return true;
-      
-  });
 
 		</script>
 	</head>
