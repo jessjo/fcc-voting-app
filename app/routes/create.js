@@ -3,9 +3,7 @@
 var multer  = require('multer')
 var upload = multer({ dest: 'uploads/' })
 var express = require('express');
-var mongoose = require('mongoose');
-var Polls = require('../models/polls.js');
-//http://www.clementinejs.com/tutorials/tutorial-passport.html
+//var models = require('./app/models/polls.js');
 
 
 //For creating polls
@@ -25,9 +23,9 @@ app.route('/create')
 
 
 
-app.post('/create', upload.array(),  function (req, res, next) {
+app.post('/create',  upload.array(), function (req, res, next) {
 
-      console.log(req.body);
+    console.log(req.body)
       
 	  res.status(204).end();
 });
