@@ -8,9 +8,9 @@ var express = require('express');
 
 //For creating polls
 
-module.exports = function (app) {
+module.exports = function (app, db) {
     
-    var bodyParser = require('body-parser')
+var bodyParser = require('body-parser')
 app.use(bodyParser.json() );       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
@@ -22,10 +22,11 @@ app.route('/create')
 });
 
 
-var cpUpload = upload.fields([{ name: 'question', maxCount: 1 }, { name: 'prof1', maxCount: 8 }])
+
 app.post('/create',  function (req, res, next) {
 
-      console.log(req.body)
+      console.log(req.body['question'])
+      
 	  res.status(204).end();
 });
 
