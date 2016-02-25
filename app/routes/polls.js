@@ -31,5 +31,5 @@ app.route('/polls/:pollID')
 };
 
 function formatPoll (poll, callback){
-    var formatted = '{ "dataset" : [{"seriesname" :"Petrol Prices","data" : [{"value": 64.72}]},{"seriesname" :"Diesel Prices","data" : [{"value": 52.49}]}],"categories" : [{"label":"Jan"}]}';
+    var formatted = { "dataset" : [{  "seriesname" :poll.question,"data" : [{"value": 64.72}]},{"seriesname" :"Diesel Prices","data" : [{"value": 52.49}]}],"categories" : [{"label":"Jan"}]};
 }
