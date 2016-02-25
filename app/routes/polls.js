@@ -12,6 +12,8 @@ app.route('/polls/:pollID')
              if (err) throw err;
              if(poll){
                 console.log(poll.question);
+                
+                
              } else {
                   console.log("no result")
              }
@@ -27,3 +29,7 @@ app.route('/polls/:pollID')
 //Base case user visits home screen
 
 };
+
+function formatPoll (poll, callback){
+    var formatted = '{ "dataset" : [{"seriesname" :"Petrol Prices","data" : [{"value": 64.72}]},{"seriesname" :"Diesel Prices","data" : [{"value": 52.49}]}],"categories" : [{"label":"Jan"}]}';
+}
