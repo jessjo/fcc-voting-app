@@ -24,7 +24,7 @@ app.route('/polls/:pollID')
         console.log ("Incorrect Poll ID should 404");
     }
     
-    res.sendFile(process.cwd() + '/public/index.html');
+    res.sendFile(process.cwd() + '/public/poll.html');
 });
 //Base case user visits home screen
 
