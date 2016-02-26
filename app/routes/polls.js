@@ -30,7 +30,10 @@ app.route('/polls/:pollID')
 
 };
 
-function formatPoll (poll, callback){
+
+// This grabs stuff from the database and formats it for chart.js. First 10 colors are defined, after that colors are random
+
+function formatPoll (poll){
     var formatted = []
     var colorSlice;
    
@@ -74,6 +77,5 @@ function formatPoll (poll, callback){
         
         formatted.push({value: poll.choices[i].votes,label: poll.choices[i].category,color: colorSlice});
     }
-    console.log(formatted);
     return formatted;
 }
