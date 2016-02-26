@@ -12,7 +12,7 @@ app.route('/polls/:pollID')
              if (err) throw err;
              if(poll){
                 console.log(poll.question);
-                
+                var display = formatPoll(poll);
                 
              } else {
                   console.log("no result")
@@ -32,7 +32,48 @@ app.route('/polls/:pollID')
 
 function formatPoll (poll, callback){
     var formatted = []
+    var colorSlice;
+   
     for (var i=0; i<poll.choices.length; i++){
-        formatted.push({value: poll.choices[i].votes,label: poll.choices[i].category,color: '#00000'});
+         switch (i) {
+         case 0:
+            colorSlice = "#2E6171";
+            break;
+         case 1:
+            colorSlice = "#556F7A";
+            break;
+        case 2:
+            colorSlice = '#798086';
+            break;
+         case 3:
+             colorSlice = '#B79FAD';
+             break;
+         case 4:
+             colorSlice = '#D4AFCD';
+             break;
+         case 5:
+             colorSlice = '#8A96B5';
+             break;
+         case 6:
+             colorSlice = '#586994';
+             break;
+         case 7:
+             colorSlice = "#924F7C";
+             break;
+         case 8:
+             colorSlice = '#895D88';
+             break;
+         case 9:
+             colorSlice = '#564639';
+             break;
+         default:
+             colorSlice = '#'+Math.floor(Math.random()*16777215).toString(16);
+
+             
+         }
+        
+        formatted.push({value: poll.choices[i].votes,label: poll.choices[i].category,color: colorSlice});
     }
+    console.log(formatted);
+    return formatted;
 }
