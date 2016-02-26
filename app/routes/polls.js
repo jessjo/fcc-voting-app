@@ -31,5 +31,8 @@ app.route('/polls/:pollID')
 };
 
 function formatPoll (poll, callback){
-    var formatted = { "dataset" : [{  "seriesname" :poll.question,"data" : [{"value": 64.72}]},{"seriesname" :"Diesel Prices","data" : [{"value": 52.49}]}],"categories" : [{"label":"Jan"}]};
+    var formatted = []
+    for (var i=0; i<poll.choices.length; i++){
+        formatted.push({value: poll.choices[i].votes,label: poll.choices[i].category,color: '#00000'});
+    }
 }
