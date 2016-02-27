@@ -2,6 +2,8 @@
 
 var mongoose = require('mongoose');
 var Polls = require('../models/polls.js');
+var handlebars  = require('handlebars');
+var fs = require('fs');
 
 module.exports = function (app, db) {
 app.route('/polls/:pollID')
@@ -14,6 +16,24 @@ app.route('/polls/:pollID')
                 console.log(poll.question);
                 var display = formatPoll(poll);
                 
+                //handle bars start
+                
+            fs.readFile('handlebars-example.html', 'utf-8', function(error, source){
+                
+                handlebars.registerHelper('custom_title', function(title){
+                     var words = title.split(' ');
+                     for (var i = 0; i < words.length; i++) {
+                        if (words[i].length > 4) {
+                            words[i] = words[i][0].toUpperCase() + words[i].substr(1);
+                        }
+                      }
+                    title = words.join(' ');
+                     return title;
+                })
+                var template = handlebars.compile(source);
+                var html = template(data);
+                console.log(html)
+                });  
              } else {
                   console.log("no result")
              }
