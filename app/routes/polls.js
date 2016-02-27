@@ -5,6 +5,7 @@ var Polls = require('../models/polls.js');
 var handlebars  = require('handlebars');
 var fs = require('fs');
 
+
 module.exports = function (app, db) {
 app.route('/polls/:pollID')
   .get(function (req, res) {
@@ -15,12 +16,12 @@ app.route('/polls/:pollID')
              if(poll){
                 console.log(poll.question);
                 var display = formatPoll(poll);
+                //var myPieChart = new Chart(ctx[0]).Pie(display,options);
                 
                 
-                
-                //
+                //add chart.js data into body
                 var data = {
-                    body: 'this is a body',
+                    body: '<canvas id="myChart" width="400" height="400"></canvas>'
                 }
                 
                 
@@ -30,8 +31,6 @@ app.route('/polls/:pollID')
                // handlebars.registerHelper('body')
                 var template = handlebars.compile(source);
                 var html = template(data);
-                console.log(html)
-           
                 res.send(html);
            
                 });  
