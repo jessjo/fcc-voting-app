@@ -31,6 +31,9 @@ app.route('/polls/:pollID')
                 var template = handlebars.compile(source);
                 var html = template(data);
                 console.log(html)
+           
+                res.send(html);
+           
                 });  
              } else {
                   console.log("no result")
@@ -42,7 +45,7 @@ app.route('/polls/:pollID')
         console.log ("Incorrect Poll ID should 404");
     }
     
-    res.sendFile(process.cwd() + '/public/poll.html');
+  // res.sendFile(process.cwd() + '/public/poll.html');
 });
 //Base case user visits home screen
 
