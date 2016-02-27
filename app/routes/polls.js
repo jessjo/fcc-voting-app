@@ -16,20 +16,18 @@ app.route('/polls/:pollID')
                 console.log(poll.question);
                 var display = formatPoll(poll);
                 
+                
+                
+                //
+                var data = {
+                    body: 'this is a body',
+                }
+                
+                
                 //handle bars start
                 
-            fs.readFile('handlebars-example.html', 'utf-8', function(error, source){
-                
-                handlebars.registerHelper('custom_title', function(title){
-                     var words = title.split(' ');
-                     for (var i = 0; i < words.length; i++) {
-                        if (words[i].length > 4) {
-                            words[i] = words[i][0].toUpperCase() + words[i].substr(1);
-                        }
-                      }
-                    title = words.join(' ');
-                     return title;
-                })
+            fs.readFile('public/poll.html', 'utf-8', function(error, source){
+               // handlebars.registerHelper('body')
                 var template = handlebars.compile(source);
                 var html = template(data);
                 console.log(html)
