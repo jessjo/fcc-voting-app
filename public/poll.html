@@ -21,8 +21,10 @@
              {{{body}}}
          </div>
          <div>
+             <form id="vote-form" enctype="multipart/form-data" method="post"  action="/polls/:pollID">
              {{{voting}}}
              <input type="submit" value="Submit" id="submit" />
+             </form>
          </div>
         <script src="https://code.jquery.com/jquery-2.1.4.min.js" charset="utf-8"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>

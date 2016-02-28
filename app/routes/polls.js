@@ -8,6 +8,13 @@ var multer  = require('multer')
 var upload = multer({ dest: 'uploads/' })
 
 module.exports = function (app, db) {
+
+var bodyParser = require('body-parser')
+app.use(bodyParser.json() );       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+}));
+
 app.route('/polls/:pollID')
   .get(function (req, res) {
     var pollID = Number(req.params.pollID);
@@ -31,7 +38,9 @@ app.route('/polls/:pollID')
 
 
 //start adding in section to retrive vote 
-app.post('/polls/:pollID',  upload.array(), function (req, res, next) {
+app.post('/polls/:pollID',  upload.single('vote'), function (req, res) {
+    console.log('code reached');
+    //console.log(req.body);
 });
 
 };
@@ -86,9 +95,8 @@ function formatPoll (poll){
 }
 function displayChart (poll, res){
                 var display = formatPoll(poll);
-                
                 var votingOptions =formatVoting(display);
-                console.log(votingOptions);
+
                 //check if poll is empty for special case
                 var empty = true;
                 for (var i=0; i<display.length; i++){
@@ -126,7 +134,7 @@ function displayChart (poll, res){
 
 }
 function formatVoting(display){
-  var voteStr = "<select>";
+  var voteStr = "<select name='vote'>";
   for(var i=0; i<display.length; i++){
       voteStr += '<option value="' +display[i].label+'">'+display[i].label+"</option>"
   }
