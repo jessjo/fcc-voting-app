@@ -83,11 +83,26 @@ function displayChart (poll, res){
                 var display = formatPoll(poll)
                 
                 
+                //check if poll is empty for special case
+                var empty = true;
+                for (var i=0; i<display.length; i++){
+                    if (display[i] >0){
+                        empty = false;
+                    }
+                }
+                
+                
                 //add chart.js data into body
-                var data = {
-                    body: '<h3>'poll.question + '</h3><br><canvas id="myChart" width="400" height="400"></canvas>',
-                   // chartData: 'var data =' + JSON.stringify(display) + '; var ctx = document.getElementById("myChart").getContext("2d"); var myPieChart = new Chart(ctx).Pie(data);'
-                  chartData: ' var data =[{"value":4,"label":"blueberry","color":"#2E6171"},{"value":3,"label":"raspberry","color":"#556F7A"},{"value":2,"label":"strawberry","color":"#798086"},{"value":2,"label":"tangerine","color":"#B79FAD"}]; var ctx = document.getElementById("myChart").getContext("2d"); var myPieChart = new Chart(ctx).Pie(data);'
+                if (empty){
+                    var data = {
+                        body: '<p>No results to display</p><p>Get voting already!</p>',
+                        chartData: " "
+                    }
+                }else{
+                    var data = {
+                        body: '<h3>'+ poll.question + '</h3><br><canvas id="myChart" width="400" height="400"></canvas>',
+                        chartData: 'var data =' + JSON.stringify(display) + '; var ctx = document.getElementById("myChart").getContext("2d"); var myPieChart = new Chart(ctx).Pie(data);'
+                    }
                 }
                 
                 
