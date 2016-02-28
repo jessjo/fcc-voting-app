@@ -13,26 +13,7 @@ app.route('/polls/:pollID')
         Polls.findOne({ 'id': pollID }, function (err, poll) {
              if (err) throw err;
              if(poll){
-                console.log(poll.question);
-                
-                
-                
-                //add chart.js data into body
-                var data = {
-                    body: '<canvas id="myChart" width="400" height="400"></canvas>',
-                    chartData:poll + 'var display = formatPoll(poll); var ctx = document.getElementById("myChart").getContext("2d"); var myPieChart = new Chart(ctx[0]).Pie(display,options);'
-                }
-                
-                
-                //handle bars start
-                
-            fs.readFile('public/poll.html', 'utf-8', function(error, source){
-               // handlebars.registerHelper('body')
-                var template = handlebars.compile(source);
-                var html = template(data);
-                res.send(html);
-           
-                });  
+               displayChart(poll,res);
              } else {
                   console.log("no result")
              }
@@ -97,4 +78,27 @@ function formatPoll (poll){
         formatted.push({value: poll.choices[i].votes,label: poll.choices[i].category,color: colorSlice});
     }
     return formatted;
+}
+function displayChart (poll, res){
+                var display = formatPoll(poll)
+                
+                
+                //add chart.js data into body
+                var data = {
+                    body: '<h3>'poll.question + '</h3><br><canvas id="myChart" width="400" height="400"></canvas>',
+                   // chartData: 'var data =' + JSON.stringify(display) + '; var ctx = document.getElementById("myChart").getContext("2d"); var myPieChart = new Chart(ctx).Pie(data);'
+                  chartData: ' var data =[{"value":4,"label":"blueberry","color":"#2E6171"},{"value":3,"label":"raspberry","color":"#556F7A"},{"value":2,"label":"strawberry","color":"#798086"},{"value":2,"label":"tangerine","color":"#B79FAD"}]; var ctx = document.getElementById("myChart").getContext("2d"); var myPieChart = new Chart(ctx).Pie(data);'
+                }
+                
+                
+                //handle bars start
+                
+                fs.readFile('public/poll.html', 'utf-8', function(error, source){
+               // handlebars.registerHelper('body')
+                var template = handlebars.compile(source);
+                var html = template(data);
+                res.send(html);
+           
+                }); 
+
 }
