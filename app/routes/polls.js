@@ -80,9 +80,10 @@ function formatPoll (poll){
     return formatted;
 }
 function displayChart (poll, res){
-                var display = formatPoll(poll)
+                var display = formatPoll(poll);
                 
-                
+                var votingOptions =formatVoting(display);
+                console.log(votingOptions);
                 //check if poll is empty for special case
                 var empty = true;
                 for (var i=0; i<display.length; i++){
@@ -96,12 +97,14 @@ function displayChart (poll, res){
                 if (empty){
                     var data = {
                         body: '<p>No results to display</p><p>Get voting already!</p>',
-                        chartData: " "
+                        chartData: 'var data =' + JSON.stringify(display) + '; var ctx = document.getElementById("myChart").getContext("2d"); var myPieChart = new Chart(ctx).Pie(data);',
+                        voting: votingOptions
                     }
                 }else{
                     var data = {
                         body: '<h3>'+ poll.question + '</h3><br><canvas id="myChart" width="400" height="400"></canvas>',
-                        chartData: 'var data =' + JSON.stringify(display) + '; var ctx = document.getElementById("myChart").getContext("2d"); var myPieChart = new Chart(ctx).Pie(data);'
+                        chartData: 'var data =' + JSON.stringify(display) + '; var ctx = document.getElementById("myChart").getContext("2d"); var myPieChart = new Chart(ctx).Pie(data);',
+                        voting: votingOptions
                     }
                 }
                 
@@ -116,4 +119,12 @@ function displayChart (poll, res){
            
                 }); 
 
+}
+function formatVoting(display){
+  var voteStr = "<select>";
+  for(var i=0; i<display.length; i++){
+      voteStr += '<option value="' +display[i].label+'">'+display[i].label+"</option>"
+  }
+  voteStr+= "</select>";
+  return voteStr;
 }
