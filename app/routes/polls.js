@@ -4,6 +4,8 @@ var mongoose = require('mongoose');
 var Polls = require('../models/polls.js');
 var handlebars  = require('handlebars');
 var fs = require('fs');
+var multer  = require('multer')
+var upload = multer({ dest: 'uploads/' })
 
 module.exports = function (app, db) {
 app.route('/polls/:pollID')
@@ -26,10 +28,13 @@ app.route('/polls/:pollID')
     
   // res.sendFile(process.cwd() + '/public/poll.html');
 });
-//Base case user visits home screen
+
+
+//start adding in section to retrive vote 
+app.post('/polls/:pollID',  upload.array(), function (req, res, next) {
+});
 
 };
-
 
 // This grabs stuff from the database and formats it for chart.js. First 10 colors are defined, after that colors are random
 
