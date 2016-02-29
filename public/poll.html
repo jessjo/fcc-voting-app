@@ -23,6 +23,7 @@
          <div>
              <form id="vote-form" enctype="multipart/form-data" method="post"  action="/polls/:pollID">
              {{{voting}}}
+             <input type="hidden" name="PollNum" value="{{{pollNum}}}"/>
              <input type="submit" value="Submit" id="submit" />
              </form>
          </div>

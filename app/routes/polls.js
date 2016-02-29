@@ -39,8 +39,8 @@ app.route('/polls/:pollID')
 
 //start adding in section to retrive vote 
 app.post('/polls/:pollID',  upload.single('vote'), function (req, res) {
-    console.log('code reached');
-    //console.log(req.body);
+    console.log(req.body);
+
 });
 
 };
@@ -96,7 +96,6 @@ function formatPoll (poll){
 function displayChart (poll, res){
                 var display = formatPoll(poll);
                 var votingOptions =formatVoting(display);
-
                 //check if poll is empty for special case
                 var empty = true;
                 for (var i=0; i<display.length; i++){
@@ -111,13 +110,15 @@ function displayChart (poll, res){
                     var data = {
                         body: '<p>No results to display</p><p>Get voting already!</p>',
                         chartData: 'var data =' + JSON.stringify(display) + '; var ctx = document.getElementById("myChart").getContext("2d"); var myPieChart = new Chart(ctx).Pie(data);',
-                        voting: votingOptions
+                        voting: votingOptions,
+                        pollNum: poll.id
                     }
                 }else{
                     var data = {
                         body: '<h3>'+ poll.question + '</h3><br><canvas id="myChart" width="400" height="400"></canvas>',
                         chartData: 'var data =' + JSON.stringify(display) + '; var ctx = document.getElementById("myChart").getContext("2d"); var myPieChart = new Chart(ctx).Pie(data);',
-                        voting: votingOptions
+                        voting: votingOptions,
+                        pollNum: poll.id
                     }
                 }
                 
