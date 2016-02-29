@@ -39,7 +39,22 @@ app.route('/polls/:pollID')
 
 //start adding in section to retrive vote 
 app.post('/polls/:pollID',  upload.single('vote'), function (req, res) {
-    console.log(req.body);
+        Polls.findOne({ 'id': req.body.PollNum }, function (err, poll) {
+             if (err) throw err;
+             if(poll){
+               for( var i=0; i<poll.choices.length; i++){
+                   
+                   if (poll.choices[i].category==req.body.vote){
+                       poll.choices[i].votes +=1;
+                       console.log ("vote incremented " + poll.choices[i].votes)
+                       poll.save();
+                   }
+               }
+             } else {
+                console.log("no result")
+             }
+        
+        })
 
 });
 
@@ -99,7 +114,7 @@ function displayChart (poll, res){
                 //check if poll is empty for special case
                 var empty = true;
                 for (var i=0; i<display.length; i++){
-                    if (display[i] >0){
+                    if (display[i].value >0){
                         empty = false;
                     }
                 }
