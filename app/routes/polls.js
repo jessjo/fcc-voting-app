@@ -50,6 +50,7 @@ app.post('/polls/:pollID',  upload.single('vote'), function (req, res) {
                        poll.save();
                    }
                }
+               displayChart(poll, res);
              } else {
                 console.log("no result")
              }
