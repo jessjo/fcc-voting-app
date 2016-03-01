@@ -17,9 +17,9 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
   // we're connected!
-  routes(app);
+  routes(app, db);
   create(app, db);
-  polls(app,db);
+  polls(app, db);
   
 });
 
