@@ -39,6 +39,8 @@ app.route('/polls/:pollID')
 
 //start adding in section to retrive vote 
 app.post('/polls/:pollID',  upload.single('vote'), function (req, res) {
+    
+    //TO DO check authentication if a user has already voted. 
         Polls.findOne({ 'id': req.body.PollNum }, function (err, poll) {
              if (err) throw err;
              if(poll){

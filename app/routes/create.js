@@ -28,7 +28,7 @@ app.post('/create',  upload.array(), function (req, res, next) {
     console.log(req.body)
     var categories = [];
     
-    //TO DO Add in authorship. Add in voters.
+    //TO DO Add in authorship. Add in vote
     
     // finds how many fields there are transforms all answer fields into an array of objects
     for (var i=1; i< Object.keys(req.body).length; i++){
@@ -46,7 +46,7 @@ app.post('/create',  upload.array(), function (req, res, next) {
            id: count+1 });
            newDoc.save(function (err, doc) {
          if (err) { throw err; }
-          res.json(doc);
+          res.redirect('/polls/'+doc.id);
     });
     });
  
