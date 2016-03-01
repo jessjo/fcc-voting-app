@@ -36,7 +36,12 @@ body{
 	</head>
 
 	<header>
-	<div class ="header-cont">{{{header}}}</div>
+	<div class ="header-cont">{{#if loggedin}}
+	You are logged in.
+	{{else}}
+	You should log in!
+	{{/if}}
+	</div>
 	<div></div>
 	</header>
 

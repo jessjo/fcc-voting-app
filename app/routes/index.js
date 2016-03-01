@@ -22,7 +22,8 @@ app.route('/')
            pollstr+= "</ul>"
            
            var data = {
-              polls: pollstr
+              polls: pollstr,
+              header: "yay"
            }
            
             
