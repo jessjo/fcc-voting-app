@@ -13,11 +13,33 @@ app.route('/')
     //change to error
     Polls.find().sort('-id').limit(5).exec(function(err, polls){
        if (err) throw err;
-       for (var i=0;i<polls.length;i++){
-         console.log(polls[i].question);
+       if(polls){
+          var pollstr="<ul>";
+          for (var i=0;i<polls.length;i++){
+            
+             pollstr += '<li>' + polls[i].question + '</li>';
+           }
+           pollstr+= "</ul>"
+           
+           var data = {
+              polls: pollstr
+           }
+           
+            
+                fs.readFile('public/index.html', 'utf-8', function(error, source){
+                var template = handlebars.compile(source);
+                var html = template(data);
+                res.send(html);
+           
+                }); 
+
+       } else {
+         console.log ("no polls yet");
        }
+
     });
-    res.sendFile(process.cwd() + '/public/index.html');
+
+    //res.sendFile(process.cwd() + '/public/index.html');
 });
 //Base case user visits home screen
 
