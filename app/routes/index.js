@@ -17,7 +17,7 @@ app.route('/')
           var pollstr="<ul>";
           for (var i=0;i<polls.length;i++){
             
-             pollstr += '<li>' + polls[i].question + '</li>';
+             pollstr += '<li><a href="/polls/'+ polls[i].id+'">' + polls[i].question + '</a></li>';
            }
            pollstr+= "</ul>"
            
