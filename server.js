@@ -3,6 +3,7 @@
 var express = require('express');
 var routes = require('./app/routes/index.js');
 var create = require('./app/routes/create.js');
+var createaccount = require('./app/routes/createaccount.js');
 var polls = require('./app/routes/polls.js');
 var login = require('./app/routes/login.js');
 var mongoose = require('mongoose');
@@ -27,6 +28,7 @@ db.once('open', function() {
   create(app, db);
   polls(app, db);
   login(app, db);
+  createaccount(app,db);
   
 });
 

@@ -9,7 +9,7 @@ var UserDetails = require('../models/users.js');
 module.exports = function (app, db) {
     
 app.get('/login', function(req, res) {
-  res.sendFile('public/login.html');
+  res.sendFile(process.cwd() + '/public/login.html');
 });
 
 app.post('/login',
