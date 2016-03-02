@@ -7,3 +7,9 @@ module.exports = {
 		'callbackURL': process.env.APP_URL + 'auth/github/callback'
 	}
 };
+
+/**
+module.exports = {
+  "db": “YOUR_ORCHESTRATE_API_KEY”
+}
+**/

@@ -4,7 +4,7 @@ var express = require('express');
 var fs = require('fs');
 var multer  = require('multer')
 var upload = multer({ dest: 'uploads/' })
-var UserDetails = require('../models/users.js');
+var UserSchema = require('../models/users.js');
 
 module.exports = function (app, db) {
     
@@ -13,8 +13,7 @@ app.get('/createaccount', function(req, res) {
 });
 
 app.post('/createaccount', upload.single(), function(req, res){
-     console.log(req.body["username"]);
-     UserDetails.findOne({
+     UserSchema.findOne({
       'username': req.body["username"], 
     }, function(err, user) {
         if (err) throw err;
@@ -22,14 +21,12 @@ app.post('/createaccount', upload.single(), function(req, res){
             console.log("user already exists")
             //redirect to this page with error message?
         } else {
-            var newUser = new UserDetails({ username: req.body["username"],
+            var newUser = new UserSchema({ username: req.body["username"],
            password: req.body["password"]});
-           console.log("reached")
            newUser.save(function (err, doc) {
             if (err) { throw err; }
-                 res.redirect('/index');
+                 res.sendFile(process.cwd() + '/public/login.html');
             });
-            console.log("reached")
           //redirect to login page with success message?
           
         }
