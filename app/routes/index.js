@@ -23,7 +23,7 @@ app.route('/')
            
            var data = {
               polls: pollstr,
-              header: "yay"
+              loggedin: false
            }
            
             

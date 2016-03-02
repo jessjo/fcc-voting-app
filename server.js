@@ -12,6 +12,10 @@ var session = require('express-session');
 var mongo = require('mongodb').MongoClient;
 
 var app = express();
+
+//Is this the right place for this???
+app.use(passport.initialize());
+app.use(passport.session());
 require('dotenv').load();
 
 mongoose.connect('mongodb://localhost:27017/clementinejs');
