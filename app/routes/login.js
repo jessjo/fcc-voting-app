@@ -48,9 +48,14 @@ passport.use(new LocalStrategy(function(username, password, done) {
         return done(null, false);
       }
 
-      if (user.password != password) {
-        return done(null, false);
-      }
+
+       user.comparePassword(password, function(err, isMatch) {
+        if (err) throw err;
+              console.log( isMatch); //
+            if(!isMatch){
+              return done(null, false);
+            }
+          });
 
       return done(null, user);
     });
