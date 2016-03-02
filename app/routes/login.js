@@ -24,7 +24,8 @@ app.get('/loginFailure', function(req, res, next) {
 });
 
 app.get('/loginSuccess', function(req, res, next) {
-  res.send('Successfully authenticated');
+  //use handlebars???
+  res.sendFile(process.cwd() + '/public/index.html');
 });
 
 passport.serializeUser(function(user, done) {
@@ -51,7 +52,6 @@ passport.use(new LocalStrategy(function(username, password, done) {
 
        user.comparePassword(password, function(err, isMatch) {
         if (err) throw err;
-              console.log( isMatch); //
             if(!isMatch){
               return done(null, false);
             }
