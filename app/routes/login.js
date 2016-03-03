@@ -12,6 +12,7 @@ app.get('/login', function(req, res) {
   res.sendFile(process.cwd() + '/public/login.html');
 });
 
+//this isn't authenticating
 app.post('/login',
   passport.authenticate('local', {
     successRedirect: '/loginSuccess',
@@ -25,6 +26,8 @@ app.get('/loginFailure', function(req, res, next) {
 
 app.get('/loginSuccess', function(req, res, next) {
   //use handlebars???
+    console.log("passport user", req.user);
+
   res.sendFile(process.cwd() + '/public/index.html');
 });
 
@@ -56,7 +59,7 @@ passport.use(new LocalStrategy(function(username, password, done) {
               return done(null, false);
             }
           });
-
+      console.log(user);
       return done(null, user);
     });
   });

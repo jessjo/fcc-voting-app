@@ -15,14 +15,13 @@ app.route('/')
     //change to error
     
      var loggedin;
-           
-              console.log("hello")
+
                if (req.isAuthenticated()) {
                    loggedin = true;
-                   console.log("here1");
+                   console.log("Logged In");
              } else {
                   loggedin = false;
-                   console.log("here2");
+                   console.log("Not logged in");
 
              }
     Polls.find().sort('-id').limit(5).exec(function(err, polls){
@@ -41,7 +40,7 @@ app.route('/')
            
            var data = {
               polls: pollstr,
-              loggedin: false
+              loggedin: loggedin
            }
            
             
@@ -58,6 +57,9 @@ app.route('/')
 
     });
 });
+
+app.use(passport.initialize());
+app.use(passport.session());
 //Base case user visits home screen
 
 };
