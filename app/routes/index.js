@@ -15,15 +15,18 @@ app.route('/')
     //change to error
     
      var loggedin;
+     
+     //check if user is logged in
 
                if (req.isAuthenticated()) {
                    loggedin = true;
-                   console.log("Logged In");
+           
              } else {
                   loggedin = false;
-                   console.log("Not logged in");
 
              }
+             
+             
     Polls.find().sort('-id').limit(5).exec(function(err, polls){
        if (err) throw err;
        if(polls){

@@ -6,7 +6,7 @@ var multer  = require('multer')
 var upload = multer({ dest: 'uploads/' })
 var UserSchema = require('../models/users.js');
 
-module.exports = function (app, db) {
+module.exports = function (app, db, passport) {
     
 app.get('/createaccount', function(req, res) {
   res.sendFile(process.cwd() + '/public/createaccount.html');

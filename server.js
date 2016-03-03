@@ -26,10 +26,10 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
   // we're connected!
   routes(app, db, passport);
-  create(app, db);
-  polls(app, db);
+  create(app, db, passport);
+  polls(app, db, passport);
   login(app, db, passport);
-  createaccount(app,db);
+  createaccount(app,db, passport);
   
 });
 

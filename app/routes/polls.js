@@ -7,7 +7,7 @@ var fs = require('fs');
 var multer  = require('multer')
 var upload = multer({ dest: 'uploads/' })
 
-module.exports = function (app, db) {
+module.exports = function (app, db, passport) {
 
 var bodyParser = require('body-parser')
 app.use(bodyParser.json() );       // to support JSON-encoded bodies
@@ -17,12 +17,22 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 
 app.route('/polls/:pollID')
   .get(function (req, res) {
+        
+    var loggedin;
+    if (req.isAuthenticated()) {
+        loggedin = true;
+           
+     } else {
+        loggedin =false;
+    }
+             
+             
     var pollID = Number(req.params.pollID);
     if(Number.isInteger(pollID)){
         Polls.findOne({ 'id': pollID }, function (err, poll) {
              if (err) throw err;
              if(poll){
-               displayChart(poll,res);
+               displayChart(poll,res,loggedin);
              } else {
                   console.log("no result")
              }
@@ -39,8 +49,15 @@ app.route('/polls/:pollID')
 
 //start adding in section to retrive vote 
 app.post('/polls/:pollID',  upload.single('vote'), function (req, res) {
-    
     //TO DO check authentication if a user has already voted. 
+        var loggedin;
+        if (req.isAuthenticated()) {
+                 loggedin = true;
+           
+        } else {
+                loggedin =false;
+        }
+    
         Polls.findOne({ 'id': req.body.PollNum }, function (err, poll) {
              if (err) throw err;
              if(poll){
@@ -52,7 +69,7 @@ app.post('/polls/:pollID',  upload.single('vote'), function (req, res) {
                        poll.save();
                    }
                }
-               displayChart(poll, res);
+               displayChart(poll, res, loggedin);
              } else {
                 console.log("no result")
              }
@@ -111,9 +128,9 @@ function formatPoll (poll){
     }
     return formatted;
 }
-function displayChart (poll, res){
+function displayChart (poll, res, loggedin){
                 var display = formatPoll(poll);
-                var votingOptions =formatVoting(display);
+                var votingOptions =formatVoting(display,loggedin);
                 //check if poll is empty for special case
                 var empty = true;
                 for (var i=0; i<display.length; i++){
@@ -129,14 +146,16 @@ function displayChart (poll, res){
                         body: '<p>No results to display</p><p>Get voting already!</p>',
                         chartData: 'var data =' + JSON.stringify(display) + '; var ctx = document.getElementById("myChart").getContext("2d"); var myPieChart = new Chart(ctx).Pie(data);',
                         voting: votingOptions,
-                        pollNum: poll.id
+                        pollNum: poll.id,
+
                     }
                 }else{
                     var data = {
                         body: '<h3>'+ poll.question + '</h3><br><canvas id="myChart" width="400" height="400"></canvas>',
                         chartData: 'var data =' + JSON.stringify(display) + '; var ctx = document.getElementById("myChart").getContext("2d"); var myPieChart = new Chart(ctx).Pie(data);',
                         voting: votingOptions,
-                        pollNum: poll.id
+                        pollNum: poll.id,
+
                     }
                 }
                 
@@ -152,10 +171,13 @@ function displayChart (poll, res){
                 }); 
 
 }
-function formatVoting(display){
+function formatVoting(display,loggedin){
   var voteStr = "<select name='vote'>";
   for(var i=0; i<display.length; i++){
       voteStr += '<option value="' +display[i].label+'">'+display[i].label+"</option>"
+  }
+  if(loggedin){
+      voteStr+= '<option value="other">Add new option</other>'
   }
   voteStr+= "</select>";
   return voteStr;
