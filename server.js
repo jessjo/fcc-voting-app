@@ -24,10 +24,10 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
   // we're connected!
-  routes(app, db);
+  routes(app, db, passport);
   create(app, db);
   polls(app, db);
-  login(app, db);
+  login(app, db, passport);
   createaccount(app,db);
   
 });

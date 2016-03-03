@@ -6,11 +6,25 @@ var handlebars  = require('handlebars');
 var fs = require('fs');
 var multer  = require('multer')
 var upload = multer({ dest: 'uploads/' })
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
 
-module.exports = function (app,db) {
+module.exports = function (app,db,passport) {
 app.route('/')
   .get(function (req, res) {
     //change to error
+    
+     var loggedin;
+           
+              console.log("hello")
+               if (req.isAuthenticated()) {
+                   loggedin = true;
+                   console.log("here1");
+             } else {
+                  loggedin = false;
+                   console.log("here2");
+
+             }
     Polls.find().sort('-id').limit(5).exec(function(err, polls){
        if (err) throw err;
        if(polls){
@@ -20,6 +34,10 @@ app.route('/')
              pollstr += '<li><a href="/polls/'+ polls[i].id+'">' + polls[i].question + '</a></li>';
            }
            pollstr+= "</ul>"
+           
+          
+             
+    
            
            var data = {
               polls: pollstr,
@@ -39,8 +57,6 @@ app.route('/')
        }
 
     });
-
-    //res.sendFile(process.cwd() + '/public/index.html');
 });
 //Base case user visits home screen
 

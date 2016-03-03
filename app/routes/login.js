@@ -6,7 +6,7 @@ var express = require('express');
 var mongoose = require('mongoose');
 var UserDetails = require('../models/users.js');
 
-module.exports = function (app, db) {
+module.exports = function (app, db, passport) {
     
 app.get('/login', function(req, res) {
   res.sendFile(process.cwd() + '/public/login.html');
