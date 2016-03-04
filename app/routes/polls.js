@@ -32,6 +32,7 @@ app.route('/polls/:pollID')
         Polls.findOne({ 'id': pollID }, function (err, poll) {
              if (err) throw err;
              if(poll){
+               console.log(poll);
                displayChart(poll,res,loggedin);
              } else {
                   console.log("no result")
@@ -51,6 +52,7 @@ app.route('/polls/:pollID')
 app.post('/polls/:pollID',  upload.single('vote'), function (req, res) {
     //TO DO check authentication if a user has already voted. 
         var loggedin;
+
         if (req.isAuthenticated()) {
                  loggedin = true;
            
@@ -58,7 +60,7 @@ app.post('/polls/:pollID',  upload.single('vote'), function (req, res) {
                 loggedin =false;
         }
         if (req.body.vote == 'ano'){
-                 //   {"category":req.body.ano, "votes":1 }
+           //Adds a new category from logged in users
             Polls.findOneAndUpdate(
                 {id:req.body.PollNum},
                 {$push: {choices: {"category":req.body.ano, "votes":1 }} },
@@ -76,6 +78,8 @@ app.post('/polls/:pollID',  upload.single('vote'), function (req, res) {
              });
                    
          } else {
+             
+             //Add vote to existing category
               Polls.findOne({ 'id': req.body.PollNum }, function (err, poll) {
                     if (err) throw err;
                     if(poll){

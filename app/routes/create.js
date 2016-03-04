@@ -8,7 +8,7 @@ var Polls = require('../models/polls.js');
 
 //For creating polls
 
-module.exports = function (app, db) {
+module.exports = function (app, db, passport) {
     
 var bodyParser = require('body-parser')
 app.use(bodyParser.json() );       // to support JSON-encoded bodies
@@ -43,7 +43,10 @@ app.post('/create',  upload.array(), function (req, res, next) {
         
            var newDoc = new Polls({ 'question': req.body['question'],
            choices: categories,
-           id: count+1 });
+           id: count+1,
+           creator: req.user.username,
+           voters: []
+           });
            newDoc.save(function (err, doc) {
          if (err) { throw err; }
           res.redirect('/polls/'+doc.id);
