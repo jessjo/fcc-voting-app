@@ -52,18 +52,20 @@ app.route('/polls/:pollID')
 app.post('/polls/:pollID',  upload.single('vote'), function (req, res) {
     //TO DO check authentication if a user has already voted. 
         var loggedin;
-
+        var voter;
         if (req.isAuthenticated()) {
                  loggedin = true;
+                 voter = req.user.username;
            
         } else {
                 loggedin =false;
+                voter = req.connection.remoteAddress;
         }
         if (req.body.vote == 'ano'){
            //Adds a new category from logged in users
             Polls.findOneAndUpdate(
                 {id:req.body.PollNum},
-                {$push: {choices: {"category":req.body.ano, "votes":1 }} },
+                {$push: {choices: {"category":req.body.ano, "voters":[voter] }} },
                 {safe: true, upsert: true},
                 function(err, model) {
                     console.log(err);
@@ -87,8 +89,10 @@ app.post('/polls/:pollID',  upload.single('vote'), function (req, res) {
                          for( var i=0; i<poll.choices.length; i++){
                    
                              if (poll.choices[i].category==req.body.vote){
-                                 poll.choices[i].votes +=1;
-                                console.log ("vote incremented " + poll.choices[i].votes)
+  
+                                    poll.choices[i].voters.push(voter);
+                              
+                                console.log ("vote incremented " + poll.choices.voters.length)
                                 poll.save();
                             }
                          }
@@ -152,7 +156,7 @@ function formatPoll (poll){
              
          }
         
-        formatted.push({value: poll.choices[i].votes,label: poll.choices[i].category,color: colorSlice});
+        formatted.push({value: poll.choices[i].voters.length,label: poll.choices[i].category,color: colorSlice});
     }
     return formatted;
 }

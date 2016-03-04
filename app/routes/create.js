@@ -32,7 +32,7 @@ app.post('/create',  upload.array(), function (req, res, next) {
     
     // finds how many fields there are transforms all answer fields into an array of objects
     for (var i=1; i< Object.keys(req.body).length; i++){
-      categories[i-1] = {"category":req.body["field"+i], "votes":0 };
+      categories[i-1] = {"category":req.body["field"+i], "voters":[] };
     }
     //while fields exis t
     
@@ -45,7 +45,6 @@ app.post('/create',  upload.array(), function (req, res, next) {
            choices: categories,
            id: count+1,
            creator: req.user.username,
-           voters: []
            });
            newDoc.save(function (err, doc) {
          if (err) { throw err; }
