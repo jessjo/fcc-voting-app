@@ -4,6 +4,8 @@ var multer  = require('multer')
 var upload = multer({ dest: 'uploads/' })
 var express = require('express');
 var Polls = require('../models/polls.js');
+var handlebars  = require('handlebars');
+var fs = require('fs');
 
 
 //For creating polls
@@ -18,7 +20,23 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 
 app.route('/create')
   .get(function (req, res) {
-    res.sendFile(process.cwd() + '/public/create.html');
+    var loggedin;
+    if (req.isAuthenticated()) {
+        loggedin = true;
+           
+     } else {
+        loggedin =false;
+    }
+     var data = {
+              loggedin: loggedin
+           }
+    
+        fs.readFile('public/create.html', 'utf-8', function(error, source){
+                var template = handlebars.compile(source);
+                var html = template(data);
+                res.send(html);
+           
+                }); 
 });
 
 
