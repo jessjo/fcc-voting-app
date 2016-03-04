@@ -57,24 +57,48 @@ app.post('/polls/:pollID',  upload.single('vote'), function (req, res) {
         } else {
                 loggedin =false;
         }
-    
-        Polls.findOne({ 'id': req.body.PollNum }, function (err, poll) {
-             if (err) throw err;
-             if(poll){
-               for( var i=0; i<poll.choices.length; i++){
+        if (req.body.vote == 'ano'){
+                 //   {"category":req.body.ano, "votes":1 }
+            Polls.findOneAndUpdate(
+                {id:req.body.PollNum},
+                {$push: {choices: {"category":req.body.ano, "votes":1 }} },
+                {safe: true, upsert: true},
+                function(err, model) {
+                    console.log(err);
+                }
+            );
+             Polls.findOne({ 'id': req.body.PollNum }, function (err, poll) {
+                    if (err) throw err;
+                    if(poll){
+                         displayChart(poll, res, loggedin);
+                    }
+
+             });
                    
-                   if (poll.choices[i].category==req.body.vote){
-                       poll.choices[i].votes +=1;
-                       console.log ("vote incremented " + poll.choices[i].votes)
-                       poll.save();
-                   }
-               }
-               displayChart(poll, res, loggedin);
+         } else {
+              Polls.findOne({ 'id': req.body.PollNum }, function (err, poll) {
+                    if (err) throw err;
+                    if(poll){
+             
+                         for( var i=0; i<poll.choices.length; i++){
+                   
+                             if (poll.choices[i].category==req.body.vote){
+                                 poll.choices[i].votes +=1;
+                                console.log ("vote incremented " + poll.choices[i].votes)
+                                poll.save();
+                            }
+                         }
+                   
+               
+        
+                     displayChart(poll, res, loggedin);
              } else {
                 console.log("no result")
              }
         
         })
+        
+     }
 
 });
 
@@ -172,13 +196,13 @@ function displayChart (poll, res, loggedin){
 
 }
 function formatVoting(display,loggedin){
-  var voteStr = "<select name='vote'>";
+  var voteStr = "<select name='vote'  onchange=" + '"if (this.value=='+ "'ano')   {this.form['ano'].style.visibility='visible'}else     {this.form['ano'].style.visibility='hidden'}"+ '">';
   for(var i=0; i<display.length; i++){
       voteStr += '<option value="' +display[i].label+'">'+display[i].label+"</option>"
   }
   if(loggedin){
-      voteStr+= '<option value="other">Add new option</other>'
+      voteStr+= '<option value="ano">Add new option</other>'
   }
-  voteStr+= "</select>";
+  voteStr+= '</select><input type="textbox" name="ano" style="visibility:hidden;"/><br/>';
   return voteStr;
 }
