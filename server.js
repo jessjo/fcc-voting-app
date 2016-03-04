@@ -6,6 +6,7 @@ var create = require('./app/routes/create.js');
 var createaccount = require('./app/routes/createaccount.js');
 var polls = require('./app/routes/polls.js');
 var login = require('./app/routes/login.js');
+var mypolls = require('./app/routes/mypolls.js');
 var mongoose = require('mongoose');
 var passport = require('passport');
 var LocalStrategy = require('passport-local')
@@ -30,6 +31,7 @@ db.once('open', function() {
   polls(app, db, passport);
   login(app, db, passport);
   createaccount(app,db, passport);
+  mypolls(app,db,passport);
   
 });
 
