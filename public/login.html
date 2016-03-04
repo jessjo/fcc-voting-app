@@ -4,6 +4,9 @@
   <body>
     <form action="/login" method="post">
       <div>
+        <h3>Log in to continue</h3>
+        <p/>
+        {{#if error}}<p>Incorrect username or password.</p>{{/if}}
         <label>Username:</label>
         <input type="text" name="username" />
         <br/>

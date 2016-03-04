@@ -5,6 +5,7 @@
     <form action="/createaccount" method="post">
       <div>
         <h3>Create an account:</h3>
+        <p>{{#if error}}That username already exists. Try again.{{/if}}</p>
         <label>Username:</label>
         <input type="text" name="username" />
         <br/>
