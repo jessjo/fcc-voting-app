@@ -92,7 +92,7 @@ app.post('/polls/:pollID',  upload.single('vote'), function (req, res) {
   
                                     poll.choices[i].voters.push(voter);
                               
-                                console.log ("vote incremented " + poll.choices.voters.length)
+                                console.log ("vote incremented " + poll.choices[i].voters.length)
                                 poll.save();
                             }
                          }
