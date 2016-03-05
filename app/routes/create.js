@@ -71,8 +71,6 @@ app.post('/create',  upload.array(), function (req, res, next) {
     });
  
    
-      
-	  //res.status(204).end();
 });
 
 //user visits poll creation page
