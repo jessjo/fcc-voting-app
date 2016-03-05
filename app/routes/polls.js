@@ -117,7 +117,6 @@ app.post('/polls/:pollID',  upload.single('vote'), function (req, res) {
 function formatPoll (poll){
     var formatted = []
     var colorSlice;
-   
     for (var i=0; i<poll.choices.length; i++){
          switch (i) {
          case 0:
@@ -172,22 +171,27 @@ function displayChart (poll, res, loggedin){
                     }
                 }
                 
+   
                 
                 //add chart.js data into body
                 if (empty){
+                    
                     var data = {
                         body: '<p>No results to display</p><p>Get voting already!</p>',
                         chartData: 'var data =' + JSON.stringify(display) + '; var ctx = document.getElementById("myChart").getContext("2d"); var myPieChart = new Chart(ctx).Pie(data);',
                         voting: votingOptions,
                         pollNum: poll.id,
+                        notdelete: true
 
                     }
+       
                 }else{
                     var data = {
                         body: '<h3>'+ poll.question + '</h3><br><canvas id="myChart" width="400" height="400"></canvas>',
                         chartData: 'var data =' + JSON.stringify(display) + '; var ctx = document.getElementById("myChart").getContext("2d"); var myPieChart = new Chart(ctx).Pie(data);',
                         voting: votingOptions,
                         pollNum: poll.id,
+                        notdelete: true
 
                     }
                 }
@@ -198,7 +202,7 @@ function displayChart (poll, res, loggedin){
                 }
                 
                 //handle bars start
-                
+                }
                 fs.readFile('public/poll.html', 'utf-8', function(error, source){
                // handlebars.registerHelper('body')
                 var template = handlebars.compile(source);
@@ -208,10 +212,11 @@ function displayChart (poll, res, loggedin){
                 }); 
                 
 
-}
+
     
 }
 function formatVoting(display,loggedin){
+
   var voteStr = "<select name='vote'  onchange=" + '"if (this.value=='+ "'ano')   {this.form['ano'].style.visibility='visible'}else     {this.form['ano'].style.visibility='hidden'}"+ '">';
   for(var i=0; i<display.length; i++){
       voteStr += '<option value="' +display[i].label+'">'+display[i].label+"</option>"
