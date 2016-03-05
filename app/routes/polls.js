@@ -161,6 +161,7 @@ function formatPoll (poll){
     return formatted;
 }
 function displayChart (poll, res, loggedin){
+                if (poll.creator != ""){
                 var display = formatPoll(poll);
                 var votingOptions =formatVoting(display,loggedin);
                 //check if poll is empty for special case
@@ -190,7 +191,11 @@ function displayChart (poll, res, loggedin){
 
                     }
                 }
-                
+                } else {
+                    data = {
+                        body: '<h3>This poll has been deleted. Find <a href="/">another?</a></h3>',
+                    notdelete: false 
+                }
                 
                 //handle bars start
                 
@@ -201,7 +206,10 @@ function displayChart (poll, res, loggedin){
                 res.send(html);
            
                 }); 
+                
 
+}
+    
 }
 function formatVoting(display,loggedin){
   var voteStr = "<select name='vote'  onchange=" + '"if (this.value=='+ "'ano')   {this.form['ano'].style.visibility='visible'}else     {this.form['ano'].style.visibility='hidden'}"+ '">';
