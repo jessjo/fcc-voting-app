@@ -18,12 +18,14 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 app.route('/polls/:pollID')
   .get(function (req, res) {
         
-    var loggedin;
+    var loggedin, voter;
     if (req.isAuthenticated()) {
         loggedin = true;
+        voter = req.user.username;
            
      } else {
         loggedin =false;
+        voter = req.connection.remoteAddress;
     }
              
              
@@ -32,8 +34,9 @@ app.route('/polls/:pollID')
         Polls.findOne({ 'id': pollID }, function (err, poll) {
              if (err) throw err;
              if(poll){
+               
                console.log(poll);
-               displayChart(poll,res,loggedin);
+               displayChart(poll,res,loggedin, voter);
              } else {
                   console.log("no result")
              }
@@ -53,6 +56,7 @@ app.post('/polls/:pollID',  upload.single('vote'), function (req, res) {
     //TO DO check authentication if a user has already voted. 
         var loggedin;
         var voter;
+        //check if user is loggedin
         if (req.isAuthenticated()) {
                  loggedin = true;
                  voter = req.user.username;
@@ -61,6 +65,10 @@ app.post('/polls/:pollID',  upload.single('vote'), function (req, res) {
                 loggedin =false;
                 voter = req.connection.remoteAddress;
         }
+        
+        //find this poll, check if this user has voted
+        
+        //If it's a new category
         if (req.body.vote == 'ano'){
            //Adds a new category from logged in users
             Polls.findOneAndUpdate(
@@ -74,7 +82,7 @@ app.post('/polls/:pollID',  upload.single('vote'), function (req, res) {
              Polls.findOne({ 'id': req.body.PollNum }, function (err, poll) {
                     if (err) throw err;
                     if(poll){
-                         displayChart(poll, res, loggedin);
+                         displayChart(poll, res, loggedin, voter);
                     }
 
              });
@@ -99,7 +107,7 @@ app.post('/polls/:pollID',  upload.single('vote'), function (req, res) {
                    
                
         
-                     displayChart(poll, res, loggedin);
+                     displayChart(poll, res, loggedin, voter);
              } else {
                 console.log("no result")
              }
@@ -159,10 +167,19 @@ function formatPoll (poll){
     }
     return formatted;
 }
-function displayChart (poll, res, loggedin){
+function displayChart (poll, res, loggedin, voter){
                 if (poll.creator != ""){
                 var display = formatPoll(poll);
-                var votingOptions =formatVoting(display,loggedin);
+                //only need to call this if they haven't already voted.
+                var notVoted=true;
+                for (var i=0; i<poll.choices.length; i++){
+                    for (var j=0; j<poll.choices[i].voters.length; j++){
+                        if (poll.choices[i].voters[j] == voter){
+                            notVoted=false;
+                        }
+                    }
+                }
+                     var votingOptions =formatVoting(display,loggedin);
                 //check if poll is empty for special case
                 var empty = true;
                 for (var i=0; i<display.length; i++){
@@ -181,7 +198,8 @@ function displayChart (poll, res, loggedin){
                         chartData: 'var data =' + JSON.stringify(display) + '; var ctx = document.getElementById("myChart").getContext("2d"); var myPieChart = new Chart(ctx).Pie(data);',
                         voting: votingOptions,
                         pollNum: poll.id,
-                        notdelete: true
+                        notdelete: true,
+                        notVoted: notVoted
 
                     }
        
@@ -191,13 +209,13 @@ function displayChart (poll, res, loggedin){
                         chartData: 'var data =' + JSON.stringify(display) + '; var ctx = document.getElementById("myChart").getContext("2d"); var myPieChart = new Chart(ctx).Pie(data);',
                         voting: votingOptions,
                         pollNum: poll.id,
-                        notdelete: true
-
+                        notdelete: true,
+                        notVoted: notVoted
                     }
                 }
                 } else {
                     data = {
-                        body: '<h3>This poll has been deleted. Find <a href="/">another?</a></h3>',
+                    body: '<h3>This poll has been deleted. Find <a href="/">another?</a></h3>',
                     notdelete: false 
                 }
                 
