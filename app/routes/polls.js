@@ -199,7 +199,8 @@ function displayChart (poll, res, loggedin, voter){
                         voting: votingOptions,
                         pollNum: poll.id,
                         notdelete: true,
-                        notVoted: notVoted
+                        notVoted: notVoted,
+                        loggedin: loggedin
 
                     }
        
@@ -210,13 +211,15 @@ function displayChart (poll, res, loggedin, voter){
                         voting: votingOptions,
                         pollNum: poll.id,
                         notVoted: notVoted,
-                        notdelete: true
+                        notdelete: true,
+                         loggedin: loggedin
                     }
                 }
                 } else {
                     data = {
                     body: '<h3>This poll has been deleted. Find <a href="/">another?</a></h3>',
-                    notdelete: false 
+                    notdelete: false,
+                    loggedin: loggedin
                 }
               
                 //handle bars start

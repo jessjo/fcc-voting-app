@@ -3,6 +3,40 @@
 <html>
 
 	<head>
+	    	     <meta charset="utf-8">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+		<style>
+body{
+    margin:0px;
+    background:#75B9BE;
+}
+.header {
+    height:50px;
+    background:#F0F0F0;
+    position: fixed;
+    border:1px solid #CCC;
+    width:100%;
+    top:0px;
+    margin:0px auto;
+}
+.header-cont {
+    background:#B9F18C;
+    color:black;
+    width:100%;
+    position:fixed;
+    top:0px;
+    text-align:right;
+}
+.content {
+    width:960px;
+    background: #F0F0F0;
+    border: 1px solid #CCC;
+    height: 2000px;
+    margin: 20px auto;
+}
+
+</style>
 	    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 		<title>The Amazing Poll Creator</title>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
@@ -14,7 +48,7 @@
         var addto = "#field" + next;
         var addRemove = "#field" + (next);
         next = next + 1;
-        var newIn = '<input autocomplete="off" class="input form-control" id="field' + next + '" name="field' + next + '" type="text">';
+        var newIn = '<input autocomplete="off" class="input form-control" id="field' + next + '" name="field' + next + '" type="text" width="40%" placeholder="Type another option" >';
         var newInput = $(newIn);
         var removeBtn = '<button id="remove' + (next - 1) + '" class="btn btn-danger remove-me" >-</button></div><div id="field">';
         var removeButton = $(removeBtn);
@@ -41,16 +75,24 @@
 		</script>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 	</head>
+  
+        	<div class ="header-cont">{{#if loggedin}}
+	<a href="/"><i class="fa fa-home"></i> Home</a> | <a href="/create"><i class="fa fa-pie-chart"></i> Create Poll</a> | <a href="/mypolls"><i class="fa fa-folder-open"></i> My Polls</a>
+	{{else}}
+	<a href="/login">Log in</a> | <a href="/createaccount">Create an account</a>.
+	{{/if}}
+	</div>
 
-	<header>
-		<p>Create a poll:</p>
-	</header>
 
 	<body>
-		<div class="container">
-		    
+
+	  <div class="content">	   
+	  	<header>
+		<h3>Create a poll:</h3>
+	</header>
 	{{#if loggedin}}
 	    <div class="row">
+	   <div class="col-md-4">
 		<input type="hidden" name="count" value="1" />
         <div class="control-group" id="fields">
             <label class="control-label" for="field1">Enter a poll question:</label>
@@ -63,11 +105,18 @@
             <br>
             <small>Press + to add another form field :)</small>
             </div>
+            </div>
+            </div>
+            <div class="col-md-8">
+            <p></p>
+            </div>
         </div>
-	</div>
+	
 	{{else}}
 	<p><a href="/login">Log in</a> to create a poll.</p>
 	{{/if}}
+</div>
+</div>
 </div>
     </body>
 </html>

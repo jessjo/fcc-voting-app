@@ -5,8 +5,51 @@
 	<head>
 	     
 	     <meta charset="utf-8">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-         <title>FusionCharts Sample</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+		<style>
+body{
+    margin:0px;
+    background:#75B9BE;
+}
+.header {
+    height:50px;
+    background:#F0F0F0;
+    position: fixed;
+    border:1px solid #CCC;
+    width:100%;
+    top:0px;
+    margin:0px auto;
+}
+.header-cont {
+    background:#B9F18C;
+    color:black;
+    width:100%;
+    position:fixed;
+    top:0px;
+    text-align:right;
+}
+.content {
+    width:960px;
+    background: #F0F0F0;
+    border: 1px solid #CCC;
+    height: 2000px;
+    margin: 20px auto;
+}
+</style>
+	</head>
+
+	<header>
+	<div class ="header-cont">{{#if loggedin}}
+	<a href="/"><i class="fa fa-home"></i> Home</a> | <a href="/create"><i class="fa fa-pie-chart"></i> Create Poll</a> | <a href="/mypolls"><i class="fa fa-folder-open"></i> My Polls</a>
+	{{else}}
+	<a href="/login">Log in</a> | <a href="/createaccount">Create an account</a>.
+	{{/if}}
+	</div>
+	<div></div>
+	</header>
+
+         <title>Poll Results</title>
          <script type="text/javascript">
          window.onload = function() {
   
@@ -17,6 +60,7 @@
          </script>
 	</head>
 	<body>
+	    <div class ="content">
 	     <div class="container">
              {{{body}}}
          </div>
@@ -26,7 +70,7 @@
              <form id="vote-form" enctype="multipart/form-data" method="post"  action="/polls/:pollID">
              {{{voting}}}
              <input type="hidden" name="PollNum" value="{{{pollNum}}}"/>
-              <input type="submit" value="Submit" id="submit" />
+             <input type="submit" value="Submit" id="submit" />
              </form>
              {{else}}<p>Thanks for voting!</p>{{/if}}
          </div>
@@ -37,5 +81,6 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/AJAX/libs/handlebars.js/4.0.0/handlebars.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.js"></script>
+	</div>
 	</body>
 </html>
