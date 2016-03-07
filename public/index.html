@@ -5,10 +5,11 @@
 	<head>
 		<title>Poll Creator</title>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 		<style>
 body{
     margin:0px;
-    background:#000;
+    background:#75B9BE;
 }
 .header {
     height:50px;
@@ -20,8 +21,8 @@ body{
     margin:0px auto;
 }
 .header-cont {
-    background:#000;
-    color:white;
+    background:#B9F18C;
+    color:black;
     width:100%;
     position:fixed;
     top:0px;
@@ -48,7 +49,8 @@ body{
 
 	<body>
 		<div class ="content">
-		<div>Latest Polls:</div>
+		<div><h3><i class="fa fa-bar-chart"></i> Latest Polls</h3></div>
+		<p>Click to view the latest polls or log in to create your own</p>
 		<div class="container">
 			{{{polls}}}
 		</div>
