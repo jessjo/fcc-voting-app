@@ -188,7 +188,7 @@ function displayChart (poll, res, loggedin, voter){
                     }
                 }
                 
-   
+
                 
                 //add chart.js data into body
                 if (empty){
@@ -209,8 +209,8 @@ function displayChart (poll, res, loggedin, voter){
                         chartData: 'var data =' + JSON.stringify(display) + '; var ctx = document.getElementById("myChart").getContext("2d"); var myPieChart = new Chart(ctx).Pie(data);',
                         voting: votingOptions,
                         pollNum: poll.id,
-                        notdelete: true,
-                        notVoted: notVoted
+                        notVoted: notVoted,
+                        notdelete: true
                     }
                 }
                 } else {
@@ -218,9 +218,10 @@ function displayChart (poll, res, loggedin, voter){
                     body: '<h3>This poll has been deleted. Find <a href="/">another?</a></h3>',
                     notdelete: false 
                 }
-                
+              
                 //handle bars start
                 }
+                  console.log(data);
                 fs.readFile('public/poll.html', 'utf-8', function(error, source){
                // handlebars.registerHelper('body')
                 var template = handlebars.compile(source);
