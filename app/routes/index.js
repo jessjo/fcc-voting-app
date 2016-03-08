@@ -27,6 +27,8 @@ app.route('/')
              }
              
              
+             //builds a list of 5 most recent polls if any have been deleted skips them
+             
     Polls.find().sort('-id').limit(5).exec(function(err, polls){
        if (err) throw err;
        if(polls){
@@ -48,6 +50,7 @@ app.route('/')
            }
            
             
+            //handle bars on front page to fill in polls and login info
                 fs.readFile('public/index.html', 'utf-8', function(error, source){
                 var template = handlebars.compile(source);
                 var html = template(data);
