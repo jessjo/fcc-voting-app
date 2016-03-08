@@ -163,7 +163,7 @@ function formatPoll (poll){
              
          }
         
-        formatted.push({value: poll.choices[i].voters.length,label: poll.choices[i].category,color: colorSlice});
+        formatted.push({value: poll.choices[i].voters.length,label: poll.choices[i].category,color: colorSlice, labelColor: "white"});
     }
     return formatted;
 }
