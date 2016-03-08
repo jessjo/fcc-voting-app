@@ -1,5 +1,5 @@
 {
-  "name": "voting app",
+  "name": "voting-app",
   "version": "1.0.1",
   "description": "App for easy polling and voting.",
   "main": "server.js",
@@ -34,7 +34,6 @@
     "passport-local": "^1.0.0"
   },
   "engines": {
-    "node": "4.2.4",
-    "npm": "2.14.12"
+    "node": "4.2.4"
   }
 }
